@@ -18,5 +18,6 @@ class Conf {
     
 }
 
-
-Router::connect('actus/:slug-:id','actus/view/id:([0-9]+)/slug:([0-9a-z]+)');
+Router::connect('actus/:slug/:id','actus/view/id:([0-9]+)/slug:([0-9a-z-]+)');
+Router::connect('/', 'actus/index');
+//Router::connect('blog/:action', 'actus/:action');

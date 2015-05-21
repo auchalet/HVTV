@@ -1,5 +1,5 @@
 <?php
-foreach($actus as $k => $v):
+foreach($post as $k => $v):
 ?>
 <div class="page-header h2">
     <h2> <?php echo $v->name; ?> </h2>

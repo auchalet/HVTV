@@ -22,7 +22,7 @@ class ActusController extends Controller {
                 'online' => 1,
                 'type' => 'actu'
         );
-        $d['actus'] = $this->Post->find(array(
+        $d['post'] = $this->Post->find(array(
             'conditions' => $conditions,
             'limit' => ($perPage*($this->request->page-1)).','.$perPage
                 )
@@ -40,7 +40,7 @@ class ActusController extends Controller {
      * Charge un tableau regroupant la page demandée et toutes les pages.
      * @param type $id
      */
-    public function view($id) {
+    public function view($id,$slug) {
         $this->loadModel('Post');
         $conditions=array(
                 'online' => 1,
@@ -48,13 +48,18 @@ class ActusController extends Controller {
                 'type' => 'actu'
             
         );
-        $d['actus'] = $this->Post->findFirst(array(
+        $d['post'] = $this->Post->findFirst(array(
+            'fields' => 'id, slug, content, name',
             'conditions' => $conditions
         ));
-        
-        if (empty($d['actus'])) {
+        if (empty($d['post'])) {
             $this->e404('Page Introuvable');
         }
+
+        if($slug != $d['post']->slug){
+            $this->redirect("actus/view/id:$id/slug:".$d['post']->slug,301);
+        }
+ 
         $this->set($d);
         
         
