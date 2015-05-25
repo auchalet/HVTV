@@ -1,5 +1,10 @@
 <?php
 
+
+/**
+ * Débug variable
+ * @param type $var
+ */
 function debug($var) {
 
     if (Conf::$debug > 0) {

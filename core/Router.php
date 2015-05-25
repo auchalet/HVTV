@@ -18,12 +18,14 @@ class Router
      * @return bool
      * */
     static function parse($url, $request) {
+        //Si l'url est vide, l'url est vide
         if(empty($url)){
             $url=  Router::$routes[0];
         }
         else{
+            //Pour chaque route, va récupérer les variables de l'URL pour les paramètres de la route
             foreach (Router::$routes as $v) {
-
+                //Si une route est trouvée, chargement du contrôleur, de l'action et des paramètres
                 if (preg_match($v['catcher'], $url, $matches)) {
                     //debug($matches);
                     $request->controller = $v['controller'];
@@ -50,6 +52,15 @@ class Router
         return true;
     }
 
+    /**
+     * Connecte les routes à leur réelle action
+     * Récupère l'URL envoyée (=href)
+     * Remplace les paramètres de la route entrant
+     * Remplacement par les valeurs des variables puis formattage de l'url réelle
+     * 
+     * @param String $redir l'url envoyée
+     * @param String $url   l'url a connecter
+     */
     static function connect($redir, $url) {
         //debug($redir);
         $r = array();
@@ -80,11 +91,16 @@ class Router
         }
         $r['catcher'] = '/' . str_replace('/', '\/', $r['catcher']) . '/';
 
-
+        
         self::$routes[] = $r;
         //debug($r);
     }
 
+    /**
+     * 
+     * @param String $url
+     * @return String   l'url reformatée
+     */
     static function url($url){
         //debug(self::$routes);
         foreach (self::$routes as $v) {
